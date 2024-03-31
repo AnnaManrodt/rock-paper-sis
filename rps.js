@@ -1,88 +1,67 @@
-let userWin =0;
+let userWin = 0;
 let userTie = 0;
 let userLose = 0;
 
-const play = confirm("Do you wanna play a game?");
+function determineGameState(userChoice, computerChoice) {
+  let gameState = '';
+  if (userChoice == computerChoice) {
+    gameState = 'You tied!';
+    userTie++;
+  } else {
+    if (choices.indexOf(userChoice) > choices.indexOf(computerChoice)) {
+      if ((userChoice == "S" && computerChoice == "R")) {
+        gameState = "You lose!"
+        userLose++;
+      } else {
+        gameState = "You win!";
+        userWin++;
+      }
+    } else {
+    if ((userChoice == "R" && computerChoice == "S")) {
+        gameState = "You win!"
+        userWin++;
+      }else{
+        gameState = "You lose!"
+        userLose++;
+      }
+    }
+  }
+
+  return {
+    userChoice: userChoice,
+    computerChoice: computerChoice,
+    gameState: gameState
+  };
+}
+
+function displayGameState(gameState) {
+  alert(`User selected: ${gameState.userChoice}\nComputer selected:${gameState.computerChoice}\n${gameState.gameState}!!`);
+}
+
+function displaySessionState() {
+  alert(`User Wins: ${userWin}\n
+  User Losses: ${userLose}\n
+  User Ties: ${userTie}`);
+}
 
 const choices = ["R", "P", "S"];
 
-const compTurn= choices[Math.floor(Math.random() * choices.length)];
+let play = confirm("Do you wanna play a game?");
+while (play === true) {
+  let choice = prompt("Pick R, P, S");
+  choice = choice.toUpperCase();
+  const compChoice = choices[Math.floor(Math.random() * choices.length)];
 
-
-let choice = prompt("Pick R, P, S");
-
-
-function winningState(){
-  if(choice === "R"){
-    if(compTurn === "R"){ alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou tied!!");
-   (userTie = userTie+1);}
-  else if (compTurn === "P"){ alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou lost!!");
-  (userLose =userLose+1);}
-}     
-else if (compTurn === "S"){ alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou won!!");
-(userWin= userWin+1);}
-
-if(choice === "P"){
-  if(compTurn === "R"){let stats = alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou Won!!");
-  (userWin= userWin+1);}
-else if (compTurn === "P"){let stats =  alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou Tied!!");
-(userTie = userTie+1);}
-}
-else if (compTurn === "S"){let stats =  alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou Lost!!");
-(userLose =userLose+1);}
-
-if(choice === "S"){
-  if(compTurn === "R"){ alert("User selected: " + choice + " Computer selected: " + compTurn+ "\nYou Lost!!");
-  (userLose =userLose+1);}
-else if (compTurn=== "P"){ alert("User selected: " + choice + " Computer selected : " + compTurn+ "\nYou Won!!");
-(userWin= userWin+1);}
-}
-else if (compTurn === "S"){ alert("User selected: " + choice + " Computer selected: " + compTurn + "\nYou Tied!!");
-(userTie = userTie+1);}
-
-}
-
-
-
-choice = choice.toUpperCase();
-
-if(choice !== "R"
-&& choice !== "P"
-&& choice !== "S"
-&& choice !== "r"
-&&choice !== "p"
-&& choice !== "s" ){
-  alert("try again invaild choice")}
-
-
-if(play === true){
-  winningState();
-}
-else{
-  alert("See ya next time!");}
-
-  
-  alert(`User wins: ${userWin}
-  User losses: ${userLose}
-  User Ties ${userTie}`);
-
-
-
-
-/*function playGame(){
-  const choice = prompt("Pick R, P, S")
-  
-  
-  playGame()
-  const again = confirm("Play Again?");
-  
-  
-  if(play === true){
-    function game
+  if (choice !== "R" &&
+    choice !== "P" &&
+    choice !== "S") {
+    alert("Invaild choice. Try again.")
+    continue;
+  } else {
+    let gameState = determineGameState(choice, compChoice);
+    displayGameState(gameState);
+    displaySessionState();
   }
-  else{
-    stats
-  }
-  */
-  
-  
+  play = confirm("Do you wanna play a game?");
+}
+alert("See ya next time!");
